@@ -1,0 +1,15 @@
+<package format="2">
+  <name>iago</name>
+  <version>0.0.1</version>
+  <description>
+    Make a robot explore a space and locate an object
+  </description>
+  <maintainer email="rolland@mit.edu">Anthony Rolland</maintainer>
+  <license>Copyright 2017 Massachusetts Institute of Technology</license>
+
+	<buildtool_depend>catkin</buildtool_depend>
+	<depend>python-numpy</depend>
+	<depend>python-cv2</depend>
+	<depend>python-nose</depend>
+
+</package>

@@ -1,0 +1,109 @@
+#############################################################
+Project Iago:
+*
+            .------.
+           /  ~ ~   \,------.      ______
+         ,'  ~ ~ ~  /  (@)   \   ,'      \
+       ,'          /`.    ~ ~ \ /         \
+     ,'           | ,'\  ~ ~ ~ X     \  \  \
+   ,'  ,'          V--<       (       \  \  \
+ ,'  ,'               (vv      \/\  \  \  |  |
+(__,'  ,'   /         (vv   ""    \  \  | |  |
+  (__,'    /   /       vv   """    \ |  / / /
+      \__,'   /  |     vv          / / / / /
+          \__/   / |  | \         / /,',','
+             \__/\_^  |  \       /,'',','\
+                    `-^.__>.____/  ' ,'   \
+                            // //---'      |
+          ===============(((((((=================
+                                     | \ \  \
+                                     / |  |  \
+                                    / /  / \  \
+                                    `.     |   \
+                                      `--------'
+*
+Named after Jafar's parrot.
+A mastermind ... a planner
+#############################################################
+Publishing a plan has no purpose
+Figure out how to publish goals that the robot can get to 
+reliably or reimplement global base planner ...
+
+ActionLib:
+	- Allows client to send and CANCEL messages
+	- Good rep for iagonode.py
+
+Goal:
+	1. Get the robot to explore the space in a known map
+		- Eventually in an unknown map
+	2. Get the robot to look for source object in map
+	3. Get the robot to do it "online"
+_____________________________________________________________
+Possible Implementations:
+	1. Particle Filtering
+		- possible locations are represented as praticels
+		- the probability of an item being at a particle changes
+			as information enters and leaves the system.
+_____________________________________________________________
+Milestones:
+	1. DONE Pick N configurations and navigate to each in known map
+	2. DONE Pick N configurations that encompass entire map
+		- DONE Make sure points are withing robot radius from wall 
+	3. Perform the previous operations in updating map
+		- DONE Send as ActionLib goals
+		- Pull map occasionally
+			- Resample in map
+			- Do not resample in explored spaces
+	4. At each configuration take a visual sample (img/vid)
+		 process all samples post exploration and navigate to
+		 the one that contains the object I am looking for.
+		- Test in simulation then REAL WORLD!!!
+		- DONE Do not choose points that will make show you what you have
+			already seen. Color map according to what you have seen and
+			resample points that show you nothing
+		- Change triangle to sector of a circle
+		- Start to implement probabilites of points
+			- Which are influecned by visual context
+			-	IMPORTANT Find bounding rectangle and count amount of white in matrix
+		- DONE DRAW IT OUT!
+	5. Perform the previous actions online. i.e. choose
+		 best one to look at next.
+		- Possibly implement priority queue.
+		- 
+	6. Incorporate contextual information
+		 - Higher probability of my object existing somewhere
+			 based off of visual sample
+		 - How do I tell my robot, "This is the place you are 
+			 seeing"?
+		 		- If I see no object there, reduce said particles
+					probability
+#############################################################
+ADTs:
+_____________________________________________________________
+Particle:
+	- Position in map
+	- Probability of object being at that place
+	- Ability to be moved, deleted, reassigned
+
+Filter:
+	- contains N particles
+		- Respample around preserved particles as old ones are 
+			deleted?
+	- Sampled particles are within robot model
+	- Can perform group operations on particles
+	- Always can output some type of "best" particle
+	- Can resample in Map
+
+Robot Model:
+	- Some type of model that will contain information about
+	what the robot has seen.
+	- Shoudl include information about whether the robot has 
+	located the object it is searching for.
+_____________________________________________________________
+Main Procedure:
+	1. Make filter with points in it from map
+	2. Choose best point from filter
+	3. Navigate there
+	4. Update filter
+		- Depends on curent Milestone
+##############################################################
